@@ -3,8 +3,56 @@
 import { type DefaultError, queryOptions, type UseMutationOptions } from '@tanstack/react-query';
 
 import { client } from '../client.gen';
-import { deleteApiCondominiumsById, deleteApiCondominiumsByIdAdminsByUserId, deleteApiFractionsById, deleteApiFractionsByIdOwnersByOwnerId, deleteApiLedgerEntriesById, deleteApiOwnersById, deleteApiQuotaConfigsById, getAccountManageInfo, getApiCondominiums, getApiCondominiumsById, getApiFractions, getApiFractionsById, getApiFractionsByIdOwners, getApiLedgerEntries, getApiLedgerEntriesById, getApiOwners, getApiOwnersById, getApiQuotaConfigs, getApiQuotaConfigsById, mapIdentityApiAccountConfirmEmail, type Options, patchApiLedgerEntriesByIdStatus, postAccountForgotPassword, postAccountLogin, postAccountManage2Fa, postAccountManageInfo, postAccountRefresh, postAccountRegister, postAccountResendConfirmationEmail, postAccountResetPassword, postApiCondominiums, postApiCondominiumsByIdAdminsByUserId, postApiFractions, postApiFractionsByIdOwners, postApiLedgerEntries, postApiOwners, postApiQuotaConfigs, putApiCondominiumsById, putApiFractionsById, putApiOwnersById, putApiQuotaConfigsById } from '../sdk.gen';
-import type { DeleteApiCondominiumsByIdAdminsByUserIdData, DeleteApiCondominiumsByIdData, DeleteApiFractionsByIdData, DeleteApiFractionsByIdOwnersByOwnerIdData, DeleteApiLedgerEntriesByIdData, DeleteApiOwnersByIdData, DeleteApiQuotaConfigsByIdData, GetAccountManageInfoData, GetAccountManageInfoError, GetAccountManageInfoResponse, GetApiCondominiumsByIdData, GetApiCondominiumsByIdResponse, GetApiCondominiumsData, GetApiCondominiumsResponse, GetApiFractionsByIdData, GetApiFractionsByIdOwnersData, GetApiFractionsByIdOwnersResponse, GetApiFractionsByIdResponse, GetApiFractionsData, GetApiFractionsResponse, GetApiLedgerEntriesByIdData, GetApiLedgerEntriesByIdResponse, GetApiLedgerEntriesData, GetApiLedgerEntriesResponse, GetApiOwnersByIdData, GetApiOwnersByIdResponse, GetApiOwnersData, GetApiOwnersResponse, GetApiQuotaConfigsByIdData, GetApiQuotaConfigsByIdResponse, GetApiQuotaConfigsData, GetApiQuotaConfigsResponse, MapIdentityApiAccountConfirmEmailData, PatchApiLedgerEntriesByIdStatusData, PatchApiLedgerEntriesByIdStatusResponse, PostAccountForgotPasswordData, PostAccountForgotPasswordError, PostAccountLoginData, PostAccountLoginResponse, PostAccountManage2FaData, PostAccountManage2FaError, PostAccountManage2FaResponse, PostAccountManageInfoData, PostAccountManageInfoError, PostAccountManageInfoResponse, PostAccountRefreshData, PostAccountRefreshResponse, PostAccountRegisterData, PostAccountRegisterError, PostAccountResendConfirmationEmailData, PostAccountResetPasswordData, PostAccountResetPasswordError, PostApiCondominiumsByIdAdminsByUserIdData, PostApiCondominiumsData, PostApiCondominiumsResponse, PostApiFractionsByIdOwnersData, PostApiFractionsByIdOwnersResponse, PostApiFractionsData, PostApiFractionsResponse, PostApiLedgerEntriesData, PostApiLedgerEntriesResponse, PostApiOwnersData, PostApiOwnersResponse, PostApiQuotaConfigsData, PostApiQuotaConfigsResponse, PutApiCondominiumsByIdData, PutApiCondominiumsByIdResponse, PutApiFractionsByIdData, PutApiFractionsByIdResponse, PutApiOwnersByIdData, PutApiOwnersByIdResponse, PutApiQuotaConfigsByIdData, PutApiQuotaConfigsByIdResponse } from '../types.gen';
+import { deleteApiCondominiumsById, deleteApiCondominiumsByIdAdminsByUserId, deleteApiFractionsById, deleteApiFractionsByIdOwnersByOwnerId, deleteApiLedgerEntriesById, deleteApiOwnersById, deleteApiQuotaConfigsById, getAccountManageInfo, getAccountManageInfoRoles, getApiCondominiums, getApiCondominiumsById, getApiFractions, getApiFractionsById, getApiFractionsByIdOwners, getApiLedgerEntries, getApiLedgerEntriesById, getApiOwners, getApiOwnersById, getApiQuotaConfigs, getApiQuotaConfigsById, getApiUsers, mapIdentityApiAccountConfirmEmail, type Options, patchApiLedgerEntriesByIdStatus, postAccountForgotPassword, postAccountLogin, postAccountManage2Fa, postAccountManageInfo, postAccountRefresh, postAccountRegister, postAccountResendConfirmationEmail, postAccountResetPassword, postApiCondominiums, postApiCondominiumsByIdAdminsByUserId, postApiFractions, postApiFractionsByIdOwners, postApiLedgerEntries, postApiOwners, postApiQuotaConfigs, putApiCondominiumsById, putApiFractionsById, putApiOwnersById, putApiQuotaConfigsById } from '../sdk.gen';
+import type { DeleteApiCondominiumsByIdAdminsByUserIdData, DeleteApiCondominiumsByIdData, DeleteApiFractionsByIdData, DeleteApiFractionsByIdOwnersByOwnerIdData, DeleteApiLedgerEntriesByIdData, DeleteApiOwnersByIdData, DeleteApiQuotaConfigsByIdData, GetAccountManageInfoData, GetAccountManageInfoError, GetAccountManageInfoResponse, GetAccountManageInfoRolesData, GetAccountManageInfoRolesResponse, GetApiCondominiumsByIdData, GetApiCondominiumsByIdResponse, GetApiCondominiumsData, GetApiCondominiumsResponse, GetApiFractionsByIdData, GetApiFractionsByIdOwnersData, GetApiFractionsByIdOwnersResponse, GetApiFractionsByIdResponse, GetApiFractionsData, GetApiFractionsResponse, GetApiLedgerEntriesByIdData, GetApiLedgerEntriesByIdResponse, GetApiLedgerEntriesData, GetApiLedgerEntriesResponse, GetApiOwnersByIdData, GetApiOwnersByIdResponse, GetApiOwnersData, GetApiOwnersResponse, GetApiQuotaConfigsByIdData, GetApiQuotaConfigsByIdResponse, GetApiQuotaConfigsData, GetApiQuotaConfigsResponse, GetApiUsersData, GetApiUsersResponse, MapIdentityApiAccountConfirmEmailData, PatchApiLedgerEntriesByIdStatusData, PatchApiLedgerEntriesByIdStatusResponse, PostAccountForgotPasswordData, PostAccountForgotPasswordError, PostAccountLoginData, PostAccountLoginResponse, PostAccountManage2FaData, PostAccountManage2FaError, PostAccountManage2FaResponse, PostAccountManageInfoData, PostAccountManageInfoError, PostAccountManageInfoResponse, PostAccountRefreshData, PostAccountRefreshResponse, PostAccountRegisterData, PostAccountRegisterError, PostAccountResendConfirmationEmailData, PostAccountResetPasswordData, PostAccountResetPasswordError, PostApiCondominiumsByIdAdminsByUserIdData, PostApiCondominiumsData, PostApiCondominiumsResponse, PostApiFractionsByIdOwnersData, PostApiFractionsByIdOwnersResponse, PostApiFractionsData, PostApiFractionsResponse, PostApiLedgerEntriesData, PostApiLedgerEntriesResponse, PostApiOwnersData, PostApiOwnersResponse, PostApiQuotaConfigsData, PostApiQuotaConfigsResponse, PutApiCondominiumsByIdData, PutApiCondominiumsByIdResponse, PutApiFractionsByIdData, PutApiFractionsByIdResponse, PutApiOwnersByIdData, PutApiOwnersByIdResponse, PutApiQuotaConfigsByIdData, PutApiQuotaConfigsByIdResponse } from '../types.gen';
+
+export type QueryKey<TOptions extends Options> = [
+    Pick<TOptions, 'baseUrl' | 'body' | 'headers' | 'path' | 'query'> & {
+        _id: string;
+        _infinite?: boolean;
+        tags?: ReadonlyArray<string>;
+    }
+];
+
+const createQueryKey = <TOptions extends Options>(id: string, options?: TOptions, infinite?: boolean, tags?: ReadonlyArray<string>): [
+    QueryKey<TOptions>[0]
+] => {
+    const params: QueryKey<TOptions>[0] = { _id: id, baseUrl: options?.baseUrl || (options?.client ?? client).getConfig().baseUrl } as QueryKey<TOptions>[0];
+    if (infinite) {
+        params._infinite = infinite;
+    }
+    if (tags) {
+        params.tags = tags;
+    }
+    if (options?.body) {
+        params.body = options.body;
+    }
+    if (options?.headers) {
+        params.headers = options.headers;
+    }
+    if (options?.path) {
+        params.path = options.path;
+    }
+    if (options?.query) {
+        params.query = options.query;
+    }
+    return [params];
+};
+
+export const getAccountManageInfoRolesQueryKey = (options?: Options<GetAccountManageInfoRolesData>) => createQueryKey('getAccountManageInfoRoles', options);
+
+export const getAccountManageInfoRolesOptions = (options?: Options<GetAccountManageInfoRolesData>) => queryOptions<GetAccountManageInfoRolesResponse, DefaultError, GetAccountManageInfoRolesResponse, ReturnType<typeof getAccountManageInfoRolesQueryKey>>({
+    queryFn: async ({ queryKey, signal }) => {
+        const { data } = await getAccountManageInfoRoles({
+            ...options,
+            ...queryKey[0],
+            signal,
+            throwOnError: true
+        });
+        return data;
+    },
+    queryKey: getAccountManageInfoRolesQueryKey(options)
+});
 
 export const postAccountRegisterMutation = (options?: Partial<Options<PostAccountRegisterData>>): UseMutationOptions<unknown, PostAccountRegisterError, Options<PostAccountRegisterData>> => {
     const mutationOptions: UseMutationOptions<unknown, PostAccountRegisterError, Options<PostAccountRegisterData>> = {
@@ -46,39 +94,6 @@ export const postAccountRefreshMutation = (options?: Partial<Options<PostAccount
         }
     };
     return mutationOptions;
-};
-
-export type QueryKey<TOptions extends Options> = [
-    Pick<TOptions, 'baseUrl' | 'body' | 'headers' | 'path' | 'query'> & {
-        _id: string;
-        _infinite?: boolean;
-        tags?: ReadonlyArray<string>;
-    }
-];
-
-const createQueryKey = <TOptions extends Options>(id: string, options?: TOptions, infinite?: boolean, tags?: ReadonlyArray<string>): [
-    QueryKey<TOptions>[0]
-] => {
-    const params: QueryKey<TOptions>[0] = { _id: id, baseUrl: options?.baseUrl || (options?.client ?? client).getConfig().baseUrl } as QueryKey<TOptions>[0];
-    if (infinite) {
-        params._infinite = infinite;
-    }
-    if (tags) {
-        params.tags = tags;
-    }
-    if (options?.body) {
-        params.body = options.body;
-    }
-    if (options?.headers) {
-        params.headers = options.headers;
-    }
-    if (options?.path) {
-        params.path = options.path;
-    }
-    if (options?.query) {
-        params.query = options.query;
-    }
-    return [params];
 };
 
 export const mapIdentityApiAccountConfirmEmailQueryKey = (options: Options<MapIdentityApiAccountConfirmEmailData>) => createQueryKey('mapIdentityApiAccountConfirmEmail', options);
@@ -611,3 +626,18 @@ export const putApiQuotaConfigsByIdMutation = (options?: Partial<Options<PutApiQ
     };
     return mutationOptions;
 };
+
+export const getApiUsersQueryKey = (options?: Options<GetApiUsersData>) => createQueryKey('getApiUsers', options);
+
+export const getApiUsersOptions = (options?: Options<GetApiUsersData>) => queryOptions<GetApiUsersResponse, DefaultError, GetApiUsersResponse, ReturnType<typeof getApiUsersQueryKey>>({
+    queryFn: async ({ queryKey, signal }) => {
+        const { data } = await getApiUsers({
+            ...options,
+            ...queryKey[0],
+            signal,
+            throwOnError: true
+        });
+        return data;
+    },
+    queryKey: getApiUsersQueryKey(options)
+});

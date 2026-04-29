@@ -1,6 +1,6 @@
-import type { PostAccountManageInfoResponse } from "@/api"
+import type { GetAccountManageInfoResponse, GetAccountManageInfoRolesResponse } from "@/api"
 
-export type User = PostAccountManageInfoResponse;
+export type User = GetAccountManageInfoResponse & { roles: GetAccountManageInfoRolesResponse }
 
 export type AuthStatus = 'loading' | 'authenticated' | 'unauthenticated'
 

@@ -216,6 +216,27 @@ export type UpdateQuotaConfigRequest = {
     isActive: boolean;
 };
 
+export type UserDto = {
+    id: string;
+    email: string;
+};
+
+export type GetAccountManageInfoRolesData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/account/manage/info/roles';
+};
+
+export type GetAccountManageInfoRolesResponses = {
+    /**
+     * OK
+     */
+    200: Array<string>;
+};
+
+export type GetAccountManageInfoRolesResponse = GetAccountManageInfoRolesResponses[keyof GetAccountManageInfoRolesResponses];
+
 export type PostAccountRegisterData = {
     body: RegisterRequest;
     path?: never;
@@ -952,3 +973,19 @@ export type PutApiQuotaConfigsByIdResponses = {
 };
 
 export type PutApiQuotaConfigsByIdResponse = PutApiQuotaConfigsByIdResponses[keyof PutApiQuotaConfigsByIdResponses];
+
+export type GetApiUsersData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/Users';
+};
+
+export type GetApiUsersResponses = {
+    /**
+     * OK
+     */
+    200: Array<UserDto>;
+};
+
+export type GetApiUsersResponse = GetApiUsersResponses[keyof GetApiUsersResponses];

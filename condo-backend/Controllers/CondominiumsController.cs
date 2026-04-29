@@ -11,11 +11,18 @@ namespace CondoBackend.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-[Authorize(Roles = $"{Roles.SuperUser},{Roles.Admin}")]
+[Authorize]
 public class CondominiumsController(ApplicationDbContext db, UserManager<ApplicationUser> userManager) : ControllerBase
 {
     private string CurrentUserId => User.FindFirstValue(ClaimTypes.NameIdentifier)!;
     private bool IsSuperUser => User.IsInRole(Roles.SuperUser);
+    private bool IsResident => User.IsInRole(Roles.Resident);
+
+    private IQueryable<int> MyCondominiumIdsAsResident =>
+        db.OwnerFractions
+            .Where(of => of.Owner.UserId == CurrentUserId)
+            .Select(of => of.Fraction.CondominiumId)
+            .Distinct();
 
     private static CondominiumDto ToDto(Condominium c) =>
         new(c.Id, c.Name, c.Address, c.NIF, c.IBAN,
@@ -26,7 +33,9 @@ public class CondominiumsController(ApplicationDbContext db, UserManager<Applica
     {
         var query = db.Condominiums.Include(c => c.Admins).AsQueryable();
 
-        if (!IsSuperUser)
+        if (IsResident)
+            query = query.Where(c => MyCondominiumIdsAsResident.Contains(c.Id));
+        else if (!IsSuperUser)
             query = query.Where(c => c.Admins.Any(a => a.Id == CurrentUserId));
 
         var condominiums = await query.ToListAsync();
@@ -42,14 +51,17 @@ public class CondominiumsController(ApplicationDbContext db, UserManager<Applica
 
         if (condominium is null) return NotFound();
 
-        if (!IsSuperUser && condominium.Admins.All(a => a.Id != CurrentUserId))
+        if (IsResident && !await MyCondominiumIdsAsResident.ContainsAsync(id))
+            return Forbid();
+
+        if (!IsSuperUser && !IsResident && condominium.Admins.All(a => a.Id != CurrentUserId))
             return Forbid();
 
         return Ok(ToDto(condominium));
     }
 
     [HttpPost]
-    [Authorize(Roles = Roles.SuperUser)]
+    [Authorize(Roles = $"{Roles.SuperUser}")]
     public async Task<ActionResult<CondominiumDto>> Create(CreateCondominiumRequest request)
     {
         var condominium = new Condominium
@@ -68,6 +80,7 @@ public class CondominiumsController(ApplicationDbContext db, UserManager<Applica
     }
 
     [HttpPut("{id}")]
+    [Authorize(Roles = $"{Roles.SuperUser},{Roles.Admin}")]
     public async Task<ActionResult<CondominiumDto>> Update(int id, UpdateCondominiumRequest request)
     {
         var condominium = await db.Condominiums

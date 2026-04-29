@@ -10,7 +10,7 @@ namespace CondoBackend.Infrastructure;
 public class ApplicationDbContext(
     DbContextOptions<ApplicationDbContext> options,
     IHttpContextAccessor httpContextAccessor)
-    : IdentityDbContext<ApplicationUser, IdentityRole<string>, string>(options)
+    : IdentityDbContext<ApplicationUser, IdentityRole, string>(options)
 {
     public DbSet<Condominium> Condominiums => Set<Condominium>();
     public DbSet<Fraction> Fractions => Set<Fraction>();
@@ -22,7 +22,7 @@ public class ApplicationDbContext(
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
         var userId = httpContextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.NameIdentifier);
-        Debug.Assert(!string.IsNullOrEmpty(userId), "User ID should not be empty when saving changes to the database.");    
+        //Debug.Assert(!string.IsNullOrEmpty(userId), "User ID should not be empty when saving changes to the database.");    
         var now = DateTime.UtcNow;
 
         foreach (var entry in ChangeTracker.Entries<BaseEntity>())

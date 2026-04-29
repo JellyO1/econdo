@@ -1,6 +1,6 @@
 import { createContext, useState, useEffect, type ReactNode, use } from 'react'
 import type { User, AuthContextValue } from '@/types/auth'
-import { getAccountManageInfo } from '@/api'
+import { getAccountManageInfo, getAccountManageInfoRoles } from '@/api'
 
 type AuthState =
   | { status: 'loading'; user: null }
@@ -10,9 +10,12 @@ type AuthState =
 const AuthContext = createContext<AuthContextValue | null>(null)
 
 const fetchAuthState = async (): Promise<AuthState> => {
-  const { data } = await getAccountManageInfo()
-  if (data) {
-    return { status: 'authenticated', user: { email: data.email, isEmailConfirmed: data.isEmailConfirmed } }
+  const [{ data: info }, { data: roles }] = await Promise.all([
+    getAccountManageInfo(),
+    getAccountManageInfoRoles(),
+  ])
+  if (info && roles) {
+    return { status: 'authenticated', user: { ...info, roles } }
   }
   return { status: 'unauthenticated', user: null }
 }

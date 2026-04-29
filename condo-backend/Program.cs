@@ -1,6 +1,8 @@
+using System.Security.Claims;
 using CondoBackend.Domain.Entities;
 using CondoBackend.Infrastructure;
 using CondoBackend.Infrastructure.Email;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -27,7 +29,7 @@ builder.Services.Configure<SmtpOptions>(builder.Configuration.GetSection(SmtpOpt
 builder.Services.AddTransient<IEmailSender<ApplicationUser>, SmtpEmailSender>();
 
 builder.Services.AddIdentityApiEndpoints<ApplicationUser>()
-.AddRoles<IdentityRole<string>>()
+.AddRoles<IdentityRole>()
 .AddEntityFrameworkStores<ApplicationDbContext>()
 .AddDefaultTokenProviders();
 
@@ -51,9 +53,21 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseDefaultFiles();
+app.UseStaticFiles();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.MapGet("/account/manage/info/roles",
+    async Task<Results<Ok<IReadOnlyList<string>>, UnauthorizedHttpResult>> (UserManager<ApplicationUser> um, ClaimsPrincipal user) =>
+    {
+        var appUser = await um.GetUserAsync(user);
+        if (appUser is null) return TypedResults.Unauthorized();
+        var roles = await um.GetRolesAsync(appUser);
+        return TypedResults.Ok<IReadOnlyList<string>>(roles.ToList());
+    })
+.RequireAuthorization();
 
 app.Use(async (context, next) =>
 {
@@ -75,5 +89,6 @@ app.MapGroup("/account")
     .MapIdentityApi<ApplicationUser>();
 
 app.MapControllers();
+app.MapFallbackToFile("index.html");
 
 app.Run();

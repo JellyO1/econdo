@@ -1,7 +1,7 @@
 import { createFileRoute, Outlet, redirect } from '@tanstack/react-router'
 import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar'
 import { Separator } from '@/components/ui/separator'
-import { AppSidebar } from '@/components/layout/AppSidebar'
+import { AppSidebar } from '@/components/layout/app-sidebar'
 
 export const Route = createFileRoute('/_app')({
   beforeLoad: ({ context }) => {

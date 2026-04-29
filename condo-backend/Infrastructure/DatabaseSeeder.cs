@@ -8,7 +8,7 @@ public static class DatabaseSeeder
     public static async Task SeedAsync(WebApplication app)
     {
         using var scope = app.Services.CreateScope();
-        var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole<string>>>();
+        var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
         var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
         var config = scope.ServiceProvider.GetRequiredService<IConfiguration>();
 
@@ -16,12 +16,12 @@ public static class DatabaseSeeder
         await SeedSuperUserAsync(userManager, config);
     }
 
-    private static async Task SeedRolesAsync(RoleManager<IdentityRole<string>> roleManager)
+    private static async Task SeedRolesAsync(RoleManager<IdentityRole> roleManager)
     {
         foreach (var role in new[] { Roles.SuperUser, Roles.Admin, Roles.Resident })
         {
             if (!await roleManager.RoleExistsAsync(role))
-                await roleManager.CreateAsync(new IdentityRole<string>(role));
+                await roleManager.CreateAsync(new IdentityRole(role));
         }
     }
 
@@ -35,6 +35,7 @@ public static class DatabaseSeeder
 
         var user = new ApplicationUser
         {
+            Id = Guid.NewGuid().ToString(),
             UserName = email,
             Email = email,
             EmailConfirmed = true

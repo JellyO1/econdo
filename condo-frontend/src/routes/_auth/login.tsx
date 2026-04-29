@@ -102,11 +102,11 @@ function LoginPage() {
           </form.Field>
 
           <form.Subscribe selector={state => state.errorMap.onSubmit}>
-            {error => error ? <p className="text-destructive text-sm">{String(error)}</p> : null}
+            {(error: string | undefined) => error ? <p className="text-destructive text-sm">{error}</p> : null}
           </form.Subscribe>
 
           <form.Subscribe selector={state => state.isSubmitting}>
-            {isSubmitting => (
+            {(isSubmitting: boolean) => (
               <Button type="submit" className="w-full" disabled={isSubmitting}>
                 {isSubmitting ? 'Signing in…' : 'Sign in'}
               </Button>
